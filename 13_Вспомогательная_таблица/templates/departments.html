@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="text-center">List of Departments</h2>
+<div class="mb-3">
+    <a href="/" class="btn btn-secondary">Вернуться к работам</a>
+    {% if current_user.is_authenticated %}
+        <a href="/add_department" class="btn btn-secondary">Добавить департамент</a>
+    {% endif %}
+</div>
+{% for dep in departments %}
+    <h3>Department # {{ dep.id }}</h3>
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <thead>
+                <tr class="table-secondary">
+                    <th>Title of department</th>
+                    <th>Chief</th>
+                    <th>Members</th>
+                    <th>Department Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-light">
+                    <td>{{ dep.title }}</td>
+                    <td>{{ dep.user.surname }} {{ dep.user.name }}</td>
+                    <td>{{ dep.members }}</td>
+                    <td>{{ dep.email }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% if current_user.is_authenticated and (current_user.id == dep.chief or current_user.id == 1) %}
+        <div>
+            <a href="/departments/{{ dep.id }}" class="btn btn-warning">Изменить</a>
+            <a href="/departments_delete/{{ dep.id }}" class="btn btn-danger">Удалить</a>
+        </div>
+    {% endif %}
+{% endfor %}
+{% endblock %}

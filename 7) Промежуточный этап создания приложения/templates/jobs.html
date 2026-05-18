@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container-fluid py-5">
+        <h2 class="mb-5 text-center">Works log</h2>
+        
+        {% for job in jobs %}
+            <div class="job-section mb-5">
+                <h3 class="mb-4">Action # {{ job.id }}</h3>
+                
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr class="table-secondary">
+                                <th>Title of activity</th>
+                                <th>Team leader</th>
+                                <th>Duration</th>
+                                <th>List of collaborators</th>
+                                <th>Is finished</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-light">
+                                <td class="align-middle">{{ job.job }}</td>
+                                <td class="align-middle">{{ job.user.surname }} {{ job.user.name }}</td>
+                                <td class="align-middle">{{ job.work_size }} hours</td>
+                                <td class="align-middle">{{ job.collaborators }}</td>
+                                <td class="align-middle">
+                                    {% if job.is_finished %}
+                                        <span class="badge bg-success">Yes</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Is not finished</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
